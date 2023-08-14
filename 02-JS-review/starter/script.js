@@ -142,3 +142,196 @@ function getBooks() {
 function getBook(id) {
   return data.find((d) => d.id === id);
 }
+
+
+const book = getBook(3);
+// const title = book.title;
+// title;
+book;
+/*
+//* Destructuring
+
+
+
+//?? Destructuring Objects.
+//?? Destructuring Objects.
+//?? Destructuring Objects.
+
+// Take the title  and author out of the book object
+
+const title1 = book.title
+const author1 = book.author
+title1
+author1
+
+// Now, use destructuring to do the same thing ALL AT ONCE. names.
+// MUST MATCH the key names of the objects.
+//* We're simulating grabbing API information here! USE IT FOR MAPS!
+
+const {title, author, genres, pages, publicationDate, hasMovieAdaptation} = book
+console.log(title, author, genres, pages, publicationDate, hasMovieAdaptation)
+
+
+
+
+//? Destructuring Arrays.
+//? Destructuring Arrays.
+//? Destructuring Arrays.
+
+// Similar, but we rely on the order of the elements in the array.
+
+const primaryGenre = genres[0]
+const secondaryGenre = genres[1]
+console.log(primaryGenre, secondaryGenre)
+
+// Now, use destructuring to do the same thing ALL AT ONCE.
+const [sciFi,funny] = genres
+console.log(sciFi,funny)
+
+
+
+
+//? Rest and Spread Operator
+//? Rest and Spread Operator
+//? Rest and Spread Operator
+
+// Putting the 'rest' of an array into it's own genre, 'restOfGenres'.
+// Must be the LAST ARGUMENT of the destructuring operation.
+
+const [genre1, genre2, ...restOfGenres] = genres
+restOfGenres
+
+//* Create a new array with all the genres, but add a new one to the end.
+
+const newGenres = [...genres,'epic fantasy'] 
+// Does not matter where you place the spread operator.
+newGenres
+
+//* Add new properties (publicationDate) and update existing ones (pages), and create a new book object by destructuring.
+
+const updatedBook = {...book, 
+  moviePublicationDate: '2001-12-19', // Creting
+  pages: 1210 // Updating
+}
+console.log(updatedBook)
+
+
+
+
+//? Template Literals
+//? Template Literals
+//? Template Literals
+
+// Creating a JS expression inside of a string.
+
+//! From below:
+function getYear(str) {
+  return str.split("-")[0]
+}
+
+const summaryString = `${book.title} written by${book.author} contains ${book.pages} pages, published in ${getYear(publicationDate)}, and is made up of these genres: ${book.genres.slice(0, -1).join(', ')}, and ${book.genres.splice(-1)}. The book has ${hasMovieAdaptation ? '' :'not '}been adapted as a movie.`
+console.log(summaryString)
+
+
+
+
+//? Ternary Operator
+//? Ternary Operator 
+//? Ternary Operator 
+
+// 3 operands -  'pages > 1000'. A conditional '?' "return if true", and a ':' "return if false"
+
+const pagesRanges = pages > 1000 ? 'over a thousand' : 'less than 1000'
+console.log(`The book has ${pagesRanges} pages.`)
+
+
+
+
+//? Arrow Functions
+//? Arrow Functions
+//? Arrow Functions
+
+// Automatically returns what's on the right side of the =>
+
+function getYear(str) {
+  return str.split("-")[0]
+}
+console.log(getYear(publicationDate))
+
+const getYearX = (str) => str.split("-")[0]
+
+
+
+
+//? Short Circuiting, with &&, ||, and ??
+// &&: Returns the last value only if all are true
+
+console.log(true && 'some stuff') //* No short circuiting here.
+console.log(false && 'uh oh...')
+console.log(hasMovieAdaptation && "this book has a movei")
+console.log('joel' && 'the strING!')
+
+// ||: Returns the 1st truthy value.
+console.log(true || "some string")
+console.log(false || "uh oh...")
+console.log(book.translations.spanish)
+
+//* Setting default values using ||
+
+const spanishTranslation = book.translations.spanish || 'NOT TRANSLATED'
+spanishTranslation
+
+
+//% What about where we want 0 as true?
+// console.log(book.reviews.librarything.reviewsCount)
+// const countWrong = book.reviews.librarything.reviewsCount || 'no data'
+// countWrong // But, we want 0!!!
+
+//? For instances where we want 0 or undefined set as 'true' instead, we use the nullish coalescent operator '??'
+//? Nullish Coalescent Operator ??
+//? Nullish Coalescent Operator ??
+//? Nullish Coalescent Operator ??
+
+const count = book.reviews.librarything?.reviewsCount ?? 'no data'
+console.log(count) // Now, we get 0 when we want 0!
+
+
+
+
+//?? Optional Chaining 
+//?? Optional Chaining 
+//?? Optional Chaining 
+
+// Using a ? to "keep going" only if what came immediately before it exists.
+
+// When a value is 0/undefined, use nullish coalescing to provide the 0 instead of undefined.
+
+function getTotalReviewCount(book) {
+  const goodReads = book.reviews?.goodreads?.reviewsCount
+  const librarything = book.reviews?.librarything?.reviewsCount ?? 0
+  return goodReads + librarything
+}
+
+console.log(getTotalReviewCount(book))
+*/
+
+
+
+//? Array Map Method
+//? Array Map Method
+//? Array Map Method
+
+//* Map Method
+
+// Similar to forEach but returns an array with all the results from each iteration.
+
+const books = getBooks()
+
+//* Theory example
+
+const x = [1,2,3,4,5].map((el) => el * 2)
+x
+
+const bookTitles = books.map((book) => book.title)
+bookTitles
+
