@@ -313,7 +313,7 @@ function getTotalReviewCount(book) {
 }
 
 console.log(getTotalReviewCount(book))
-*/
+
 
 
 
@@ -334,4 +334,168 @@ x
 
 const bookTitles = books.map((book) => book.title)
 bookTitles
+
+// Only get the essentail data for each book ojbect, like title and author.
+
+function getTotalReviewCount(book) {
+  const goodReads = book.reviews?.goodreads?.reviewsCount
+  const librarything = book.reviews?.librarything?.reviewsCount ?? 0
+  return goodReads + librarything
+}
+
+
+//% Instead of having 'return', we wrap the new object k/v pairs inside ()
+const essentialData = books.map(
+  (book) => ({
+    title: book.title,
+    author: book.author,
+    reviewsCount: getTotalReviewCount(book)
+  })
+)
+essentialData
+
+
+
+//? Array Filter Method
+//? Array Filter Method
+//? Array Filter Method
+
+// Return only books over 500 pages that have movie adaptations
+
+const longBooksWithMovie = books.filter(
+  (book) => book.pages > 500 && book.hasMovieAdaptation
+  )
+longBooksWithMovie
+
+// Get only adventure books.
+
+const adventureBooksOnly = books.filter(
+  (book, i) => book.genres[i] === 
+  "adventure"
+)
+adventureBooksOnly
+
+
+// ^^^ My way, but .includes() would be look better.
+
+const adventureBooksOnly2 = books.filter(
+  (book) => book.genres.includes('adventure')
+).map(
+  (book) => book.title
+)
+adventureBooksOnly2
+
+
+//? Array Reduce method
+//? Array Reduce method
+//? Array Reduce method
+
+// The most powerful and versatile of all array methods!
+
+// We want to read all the books in the array, and we want to know how many pages in total that would be
+
+const totalPagesOfBooks = books.reduce((acc, book) => acc + book.pages, 0)
+totalPagesOfBooks
+
+
+//? Array sort method
+//? Array sort method
+//? Array sort method
+
+// by default, sort will order numbers from the smallest, in sequential order starting from 0, not account for 1 vs 10. That's why we add the a-b function to rder them by smallest to largest.
+
+//! .sort will mutate the original array!!! BE CAREFUL.
+
+const x1 = [3,7,1,9,6]
+const sortedX1 = x1.sort((a,b) => a-b )
+x1
+
+//* .slice() will create a new copy before sorting!
+
+const x2 = [3,7,1,9,6]
+const copiedSortedX2 = x2.slice().sort((a,b) => a-b)
+x2 
+copiedSortedX2
+
+// Lets go back to pages.
+
+const sortedTitlesByPages = books.slice().sort((a,b) => b.pages-a.pages).map((book) => book.title)
+sortedTitlesByPages
+
+
+
+//? Working with Immutables Arrays
+//? Working with Immutables Arrays
+//? Working with Immutables Arrays
+
+// How to add, update, and delete without changing the original array.
+
+let myArray = ['one', 'two'] // this is an immutable array because it's not changed by any other code.
+
+//* 1) Add a book ojbect to an array.
+
+const newBook = {
+  id: 6,
+  title: "Harry Potter and the Chamber of Secrets",
+  author: "J. K. Rowling",
+}
+const booksAfterAdd = [...books, newBook]
+booksAfterAdd
+
+//* 2) Delete book object from array.
+
+const booksAfterDelete = booksAfterAdd.filter((book) => book.id !== 3)
+booksAfterDelete
+
+//* 3) Update a book object while in the array.
+
+const booksAfterUpdate = booksAfterDelete.map(
+  (book) => book.id === 1 
+  ? {...book, pages: 1989}
+  : book
+)
+booksAfterUpdate
+*/
+
+
+//? Promises
+//? Promises
+//? Promises
+
+// Using Asynchronous requests to load data from a web Api. Below, the console log is called immediately after the fetch, it does not wait fo the returned data before continuting like it would normally. That's the beauty of it!
+
+//* The 1st line is "pending", beacuse nothing has been called after the fetch.
+
+/*
+fetch('https://jsonplaceholder.typicode.com/todos')
+      .then(res => res.json())
+      .then(data => console.log(data))
+
+console.log("Joel")
+*/
+
+
+//? Async/Await
+//? Async/Await
+//? Async/Await
+
+// Removes .then, makes it more clean.
+
+//* We can now "pause" the code essentially, just storing the result into a variable 'res', for response.
+
+async function getTodos() {
+  const res = await fetch('https://jsonplaceholder.typicode.com/todos')
+  const data = await res.json()
+  console.log(data)
+
+  return data
+}
+const todos = getTodos()
+console.log(todos)
+
+//% Using the function above, what if we returned 'data'? It would be 'pending', because the console log is read immediately, JS does not wait. It also does not know yet what the 'todos' are going to be.
+
+//% The result of an async function is always a promise!
+//! In react, we'll be setting state with the returned variable so it will be a bit different this is just to show the relationship between async snd await.
+
 
